@@ -1,20 +1,14 @@
 package modelo;
 
 public class Partido{
-	private Equipo equipoA;
-	private Equipo equipoB;
 
-	public Partido(Equipo equipoA, int golesEquipoA, Equipo equipoA, int golesEquipoB){
-		this.equipoA = equipoA;
-		this.equipoB = equipoB;
-	}
-
-	private Equipo avanzarFase {
-		if(golesEquipoA > golesEquipoB){
+	public Equipo avanzarFase(Equipo equipoA, Equipo equipoB) {
+		if(Math.random() > 0.5){
 			return equipoA;
-		}
+		}	
+		
 		else{
 			return equipoB;
-		}
+		}	
 	}
 }
