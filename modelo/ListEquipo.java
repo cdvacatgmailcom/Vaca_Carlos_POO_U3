@@ -1,12 +1,12 @@
-class Repositorio{
+class ListEquipo{
 	
 	private ArrayList <Equipo> equipos = new ArrayList<>();
 
-	public static void addEquipo (Equipo equipo){
+	public static void addListEquipo (Equipo equipo){
 		equipos.add(equipo);	
 	}
 
-	public ArrayList <Equipo> getListEquipo (){
+	public static ArrayList <Equipo> getListEquipo (){
 		return equipos;
 	}
 	
