@@ -1,6 +1,7 @@
 package vista;
 
 import java.util.Scanner;
+import modelo.CantidadEquiposInvalidaException;
 import modelo.Equipo;
 import modelo.Partido;
 
@@ -15,16 +16,50 @@ public class VistaTorneo {
         System.out.println("\n==========================================");
         System.out.println("       GESTIÓN DE TORNEO ELIMINATORIO     ");
         System.out.println("==========================================");
-        System.out.println("1. Simular nuevo torneo y guardar resultados");
+        System.out.println("1. Configurar equipos, sortear y guardar");
         System.out.println("2. Cargar resultados desde archivo binario");
         System.out.println("3. Salir");
         System.out.print("Seleccione una opción: ");
 
-        while (!scanner.hasNextInt()) {
-            System.out.print("Entrada inválida. Ingrese 1, 2 o 3: ");
-            scanner.next();
+        try {
+            return Integer.parseInt(scanner.nextLine().trim());
+        } catch (NumberFormatException e) {
+            return -1; // El controlador lo gestiona como opción inválida
         }
-        return scanner.nextInt();
+    }
+
+    public int pedirCantidadEquipos() {
+        while (true) {
+            System.out.print("\nIngrese la cantidad de equipos (2, 4, 8, 16 o 32): ");
+            try {
+                return Integer.parseInt(scanner.nextLine().trim());
+            } catch (NumberFormatException e) {
+                mostrarError("Entrada inválida: debe ingresar un número entero.");
+            }
+        }
+    }
+
+    public String[] pedirNombresEquipos(int cantidad) throws CantidadEquiposInvalidaException {
+        if (cantidad <= 0) {
+            throw new CantidadEquiposInvalidaException(
+                "La cantidad de equipos a registrar debe ser mayor a cero."
+            );
+        }
+
+        String[] nombres = new String[cantidad];
+        System.out.println("\n--- REGISTRO DE " + cantidad + " EQUIPOS PARTICIPANTES ---");
+
+        for (int i = 0; i < cantidad; i++) {
+            System.out.print("Ingrese el nombre del Equipo #" + (i + 1) + ": ");
+            String nombre = scanner.nextLine().trim();
+
+            while (nombre.isEmpty()) {
+                System.out.print("El nombre no puede estar vacío. Equipo #" + (i + 1) + ": ");
+                nombre = scanner.nextLine().trim();
+            }
+            nombres[i] = nombre;
+        }
+        return nombres;
     }
 
     public void mostrarMensaje(String mensaje) {
@@ -76,7 +111,7 @@ public class VistaTorneo {
             case 16: return "Octavos de Final";
             case 8:  return "Cuartos de Final";
             case 4:  return "Semifinal";
-            case 2:  return "FINAL";
+            case 2:  return "GRAN FINAL";
             default: return "Ronda de " + cantidadEquipos + " equipos";
         }
     }

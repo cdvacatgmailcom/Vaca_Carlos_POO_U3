@@ -5,7 +5,6 @@ import java.util.Random;
 
 public class Partido implements Serializable {
     private static final long serialVersionUID = 1L;
-    
     private Equipo local;
     private Equipo visitante;
     private int golesLocal;
@@ -13,12 +12,19 @@ public class Partido implements Serializable {
     private boolean definidoPorPenales;
     private Equipo ganador;
 
-    public Partido(Equipo local, Equipo visitante) {
+    public Partido(Equipo local, Equipo visitante) throws SorteoException {
+        if (local == null || visitante == null) {
+            throw new SorteoException("No se puede armar un cruce con equipos nulos.");
+        }
         this.local = local;
         this.visitante = visitante;
     }
 
-    public Equipo jugar(Random random) {
+    public Equipo jugar(Random random) throws SorteoException {
+        if (random == null) {
+            throw new SorteoException("El generador aleatorio del torneo no está inicializado.");
+        }
+
         this.golesLocal = random.nextInt(5);
         this.golesVisitante = random.nextInt(5);
 
