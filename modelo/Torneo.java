@@ -21,6 +21,12 @@ public class Torneo implements Serializable {
         this.random = new Random();
     }
 
+    public Torneo(String nombreTorneo) {
+    this.nombreTorneo = nombreTorneo;
+    this.historialFases = new ArrayList<>();
+    this.random = new Random();
+    }
+
     private void validarCantidadEquipos(Equipo[] lista) throws CantidadEquiposInvalidaException {
         if (lista == null || lista.length < 2) {
             throw new CantidadEquiposInvalidaException(
